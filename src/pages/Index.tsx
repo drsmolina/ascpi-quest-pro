@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 import { AuthCard } from "@/components/AuthCard";
 import { SessionControls } from "@/components/SessionControls";
 import { QuestionPanel } from "@/components/QuestionPanel";
@@ -338,7 +339,16 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-4xl mx-auto space-y-6">
-        <AuthCard user={user} onUserChange={setUser} />
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <AuthCard user={user} onUserChange={setUser} />
+          </div>
+          {user && (
+            <Button variant="outline" onClick={() => window.location.href = "/testing"}>
+              Testing Dashboard
+            </Button>
+          )}
+        </div>
         
         {user && (
           <>
