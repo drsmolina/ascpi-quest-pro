@@ -1,73 +1,48 @@
-# Welcome to your Lovable project
+# ASCPi Quest Pro
 
-## Project info
+ASCPi Quest Pro is an exam simulation web app built with Vite, React, and TypeScript. It uses Tailwind CSS and shadcn/ui for styling and integrates with Supabase for authentication and data storage.
 
-**URL**: https://lovable.dev/projects/4c40fbd6-c87d-45b9-b980-ba044815852e
+## Features
 
-## How can I edit this code?
+- **Email login** using Supabase's magic link authentication.
+- **Start, resume, and finish sessions** while tracking score and progress.
+- **Multiple-choice interface** that highlights correct answers and shows explanations.
+- **Review incorrect questions** after completing a session.
+- **Testing utilities** for adding and viewing questions in the database.
 
-There are several ways of editing your application.
+## Development
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/4c40fbd6-c87d-45b9-b980-ba044815852e) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+1. Install [Node.js](https://nodejs.org/) and npm.
+2. Install dependencies:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+npm install
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. Run the development server:
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```sh
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Lint the project:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+npm run lint
+```
 
-**Use GitHub Codespaces**
+5. Build for production:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```sh
+npm run build
+```
 
-## What technologies are used for this project?
+## Architecture
 
-This project is built with:
+- React components live in `src/components` and page-level views live in `src/pages`.
+- `src/integrations/supabase` configures the Supabase client and type definitions.
+- `src/hooks` contains reusable hooks such as toast notifications and mobile detection.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## License
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/4c40fbd6-c87d-45b9-b980-ba044815852e) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is provided as-is without warranty.
