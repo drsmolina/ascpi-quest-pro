@@ -19,6 +19,7 @@ interface Question {
   difficulty?: string;
   explanation?: string;
   is_active: boolean;
+  image_url?: string;
 }
 
 const Testing = () => {
@@ -29,6 +30,7 @@ const Testing = () => {
     topic: "",
     difficulty: "",
     explanation: "",
+    image_url: "",
   });
   const [existingQuestions, setExistingQuestions] = useState<Question[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +64,7 @@ const Testing = () => {
         topic: newQuestion.topic || null,
         difficulty: newQuestion.difficulty || null,
         explanation: newQuestion.explanation || null,
+        image_url: newQuestion.image_url || null,
         is_active: true,
       });
 
@@ -80,14 +83,16 @@ const Testing = () => {
         topic: "",
         difficulty: "",
         explanation: "",
+        image_url: "",
       });
 
       // Refresh questions list
       loadExistingQuestions();
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
@@ -107,17 +112,21 @@ const Testing = () => {
 
       const questions = (data || []).map(q => ({
         ...q,
-        choices: Array.isArray(q.choices) ? q.choices.filter((c: any) => typeof c === 'string') : [],
+        choices: Array.isArray(q.choices)
+          ? q.choices.filter((c: unknown): c is string => typeof c === "string")
+          : [],
         topic: q.topic || undefined,
         difficulty: q.difficulty || undefined,
         explanation: q.explanation || undefined,
+        image_url: q.image_url || undefined,
       }));
 
       setExistingQuestions(questions);
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
@@ -181,10 +190,11 @@ const Testing = () => {
       });
 
       loadExistingQuestions();
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
@@ -202,10 +212,11 @@ const Testing = () => {
         title: "Database Connection",
         description: "✅ Successfully connected to Supabase!",
       });
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Database Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
@@ -349,6 +360,16 @@ const Testing = () => {
                   />
                 </div>
 
+                <div>
+                  <label className="text-sm font-medium">Image URL (Optional)</label>
+                  <Input
+                    placeholder="https://example.com/image.jpg"
+                    value={newQuestion.image_url}
+                    onChange={(e) => setNewQuestion({ ...newQuestion, image_url: e.target.value })}
+                    className="mt-1"
+                  />
+                </div>
+
                 <Button onClick={addSampleQuestion} disabled={isLoading} className="w-full">
                   {isLoading ? "Adding..." : "Add Question"}
                 </Button>
@@ -386,7 +407,15 @@ const Testing = () => {
                             </div>
                             
                             <div className="font-medium">{question.stem}</div>
-                            
+
+                            {question.image_url && (
+                              <img
+                                src={question.image_url}
+                                alt="Question illustration"
+                                className="max-h-64 w-full object-contain rounded"
+                              />
+                            )}
+
                             <div className="grid gap-1">
                               {question.choices.map((choice, index) => (
                                 <div

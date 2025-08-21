@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 interface SessionControlsProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   session: any;
   onCreateSession: (topic: string | null, mode: string) => void;
   onResumeSession: () => void;

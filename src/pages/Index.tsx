@@ -17,6 +17,7 @@ interface Question {
   difficulty?: string;
   explanation?: string;
   is_active: boolean;
+  image_url?: string;
 }
 
 interface Session {
@@ -55,12 +56,19 @@ const Index = () => {
   const [incorrectQuestions, setIncorrectQuestions] = useState<Question[]>([]);
   const { toast } = useToast();
 
+  // dbQuestion comes directly from Supabase and may have any shape
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const convertToQuestion = (dbQuestion: any): Question => ({
     ...dbQuestion,
-    choices: Array.isArray(dbQuestion.choices) ? dbQuestion.choices.filter((c: any) => typeof c === 'string') : [],
+    choices: Array.isArray(dbQuestion.choices)
+      ? dbQuestion.choices.filter(
+          (c: unknown): c is string => typeof c === "string"
+        )
+      : [],
     topic: dbQuestion.topic || undefined,
     difficulty: dbQuestion.difficulty || undefined,
     explanation: dbQuestion.explanation || undefined,
+    image_url: dbQuestion.image_url || undefined,
   });
 
   const fetchActiveQuestions = async (topic?: string): Promise<Question[]> => {
@@ -149,10 +157,11 @@ const Index = () => {
         title: "New session created",
         description: `Started ${mode} with ${questionIds.length} questions.`,
       });
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
@@ -206,10 +215,11 @@ const Index = () => {
         title: "Session resumed",
         description: `Resumed ${sessionData.mode} session.`,
       });
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
@@ -267,10 +277,11 @@ const Index = () => {
       if (sessionError) throw sessionError;
 
       setSession(sessionData);
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
@@ -319,10 +330,11 @@ const Index = () => {
         title: "Session completed",
         description: `Final score: ${data.score}/${data.total}`,
       });
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     }
