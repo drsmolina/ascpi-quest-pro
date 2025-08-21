@@ -37,6 +37,24 @@ npm run lint
 npm run build
 ```
 
+## Deploy to GitHub Pages
+
+1. Build the project:
+
+   ```sh
+   npm run build
+   ```
+
+2. Push the contents of `dist/` to a `gh-pages` branch:
+
+   ```sh
+   git subtree push --prefix dist origin gh-pages
+   ```
+
+3. Enable GitHub Pages in the repository settings, pointing to the `gh-pages` branch.
+
+The app is configured with a production base path of `/ascpi-quest-pro/` and uses a hash-based router for client-side navigation.
+
 ## Architecture
 
 - React components live in `src/components` and page-level views live in `src/pages`.
