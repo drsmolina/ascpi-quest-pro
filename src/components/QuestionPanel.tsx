@@ -12,6 +12,7 @@ interface Question {
   topic?: string;
   difficulty?: string;
   explanation?: string;
+  image_url?: string;
 }
 
 interface Attempt {
@@ -22,6 +23,7 @@ interface Attempt {
 
 interface QuestionPanelProps {
   question: Question;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   session: any;
   attempt: Attempt | null;
   onAnswer: (choiceIndex: number) => void;
@@ -57,6 +59,16 @@ export function QuestionPanel({
         <div className="text-lg font-semibold leading-relaxed">
           {question.stem}
         </div>
+
+        {question.image_url && (
+          <div className="flex justify-center">
+            <img
+              src={question.image_url}
+              alt="Question illustration"
+              className="max-h-64 w-full object-contain rounded"
+            />
+          </div>
+        )}
 
         <div className="grid gap-2">
           {question.choices?.map((choice, index) => {

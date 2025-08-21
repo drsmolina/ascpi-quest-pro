@@ -9,6 +9,7 @@ interface Question {
   topic?: string;
   difficulty?: string;
   explanation?: string;
+  image_url?: string;
 }
 
 interface ReviewPanelProps {
@@ -51,11 +52,19 @@ export function ReviewPanel({ incorrectQuestions }: ReviewPanelProps) {
                     <Badge variant="secondary">{question.difficulty}</Badge>
                   )}
                 </div>
-                
+
                 <div className="font-medium">
                   {question.stem}
                 </div>
-                
+
+                {question.image_url && (
+                  <img
+                    src={question.image_url}
+                    alt="Question illustration"
+                    className="max-h-64 w-full object-contain rounded"
+                  />
+                )}
+
                 <div className="text-sm">
                   <span className="text-muted-foreground">Correct answer: </span>
                   <span className="font-medium text-success">
